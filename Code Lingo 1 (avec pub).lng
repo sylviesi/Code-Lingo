@@ -1,0 +1,54 @@
+MODEL:
+
+DATA:
+A=1000;
+hr=0.1;
+Cp=100;
+
+ENDDATA
+
+
+MAX = Tp;
+
+!Revenu total;
+
+Tp=(p+ro)*d-((a*d)/q)-Cp*d-((hr*Cp*q)/2)-b;
+T=q/d;
+
+! Profil de demande D(P);
+
+
+!d= - 0.003539*@pow(p,3) + 2.1215*@pow(p,2) - 413.3*p + 26580; 	!Profil de demande I ; 
+!d = - 0.002703*@pow(p,3) + 1.577*@pow(p,2) - 296.8*p + 18413; 	!Profil de demande II;
+d = - 0.0023*@pow(p,3) + 1.35*@pow(p,2) - 254.5*p + 15500; 		!Profil de demande III;
+
+
+! Fonction ro;
+
+
+! ro=30*(1- @exp(-b/1195)); 	!Scenario 1;
+! ro = (1/3.5)*@pow(b,0.5); 	!Scenario 2;
+ ro = 50*(1- @exp(-b/8000));	!Scenario 3;
+
+
+
+! Prix de vente min variable;
+
+!p>=170;			!Profil de demande I;
+p>=100; 	!		!Profil de demande II & III;
+
+
+
+! Prix de vente max unique;
+
+p<=270;
+
+! Contrainte sur les variables;
+
+Tp>=0;
+T>=0;
+b>=0;
+q>=0;
+@gin(q);
+
+END
